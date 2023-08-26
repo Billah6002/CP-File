@@ -2,9 +2,9 @@
 using namespace std;
 #define ll long long
 
+// Max SIeve
 int MaxSieve[10000000];
 vector <int> prime;
-
 void sieve(){
     
     MaxSieve[0] = MaxSieve[1] = 1;
@@ -18,6 +18,8 @@ void sieve(){
         }
     }
 }
+
+// Segment tree
 const int N = 1e5;
 ll seg_tree[4*N], arr[N];
 
@@ -61,7 +63,7 @@ ll query(int node, int st, int ed, int l, int r){
 	return q1+q2;
 }
 
-
+// DSU
 int par[N], Size[N];
 int parent(int n){
     if(par[n]==n) return n;
@@ -78,6 +80,30 @@ void Union(int a, int b){
         par[a] = b;
         Size[b] += Size[a];
     }
+}
+
+// dijkstra algorithms
+vector<pair<int, ll>> Adj[1005];
+int dist[1005];
+
+void dijkstra(int s){
+
+    priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>> > pq;
+    pq.push({0, s});
+    bool mark[n+1] = {false};
+    while(!pq.empty()){
+        auto [w, v] = pq.top();
+        pq.pop();
+        mark[v] = true;
+        for(auto [u, wt]:Adj[v]){
+            if(mark[u]) continue;
+            if(w+wt < dist[u]){
+                dist[u] = w+wt;
+                pq.push({w+wt, u});
+            }
+        }
+    }
+
 }
 int main(){
 
