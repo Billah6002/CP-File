@@ -9,10 +9,12 @@ int ance[N][lg];
 void dfs(int u, int p){
     for(int i=1; i<lg; i++){
         ance[u][i] = ance[ance[u][i-1]][i-1];
+        // mx[u][i] = max(mx[u][i-1], mx[ance[u][i-1]][i-1]);
     }
     for(int v:adj[u]){
         if(v==p) continue;
         ance[v][0] = u;
+        //mx[v][0] = w;
         dfs(v, u);
     }
 }
