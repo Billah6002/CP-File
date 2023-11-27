@@ -31,8 +31,10 @@ void solve() {
     int q; cin >> q;
     while(q--){
         int u, k; cin >> u >> k;
+        // int ans = 0
         for(int i=lg-1; i>=0; i--){
             if(k&(1<<i)){
+                //ans = max(ans, mx[u][i]);
                 u = ance[u][i];
             }
         }
