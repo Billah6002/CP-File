@@ -1,4 +1,4 @@
-//https://cses.fi/problemset/task/2193
+//https://vjudge.net/problem/AtCoder-abc259_b
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
@@ -20,33 +20,27 @@ struct point {
 	ll triangle(const point &a, const point &b) {
 		return (a - *this) * ( b - *this);
 	}
+	bool operator <(const point a) {
+		return make_pair(x, y) < make_pair(a.x, a.y);
+	}
+	pair<double, double> rotate(double deg) {
+		deg = deg * M_PI / 180.0;
+		return {x * cos(deg) - y * sin(deg), x * sin(deg) + y * cos(deg)};
+	}
 };
 
 void solve() {
-	int n; cin >> n;
-	point arr[n];
-	for (int i = 0; i < n; i++) {
-		arr[i].read();
-	}
-	ll boundery = 0;
-	point a = {0, 0};
-	ll ans = 0;
-	for (int i = 0; i < n; i++) {
-		int j = (i + 1) % n;
-		point dff = arr[j] - arr[i];
-		ans += a.triangle(arr[i], arr[j]);
-		ll g = gcd(abs(dff.x), abs(dff.y));
-		boundery += g;
-	}
-	ans = abs(ans);
-	ll interior = (ans - boundery + 2) / 2;
-	cout << interior << " " << boundery << "\n";
-
+	cout << fixed << setprecision(15);
+	point a;
+	a.read();
+	int deg; cin >> deg;
+	pair<double, double> ans = a.rotate(deg);
+	cout << ans.first << " " << ans.second << "\n";
 }
 
 int main() {
 	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
+	cin.tie(NULL);
 
 	int tt = 1;
 	// cin >> tt;
