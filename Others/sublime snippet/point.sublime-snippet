@@ -1,0 +1,33 @@
+<snippet>
+	<content><![CDATA[
+struct point {
+	ll x, y;
+	void read() {
+		cin >> x >> y;
+	}
+	void operator -=(const point &a) {
+		x -= a.x; y -= a.y;
+	}
+	point operator -(const point a) const {
+		return point{x - a.x, y - a.y};
+	}
+	ll operator *(const point &a) const {
+		return x * a.y - y * a.x;
+	}
+	ll triangle(const point &a, const point &b) {
+		return (a - *this) * ( b - *this);
+	}
+	bool operator <(const point a) {
+		return make_pair(x, y) < make_pair(a.x, a.y);
+	}
+	pair<double, double> rotate(double deg) {
+		deg = deg * M_PI / 180.0;
+		return {x * cos(deg) - y * sin(deg), x * sin(deg) + y * cos(deg)};
+	}
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>point</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

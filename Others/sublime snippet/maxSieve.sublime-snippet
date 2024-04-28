@@ -1,0 +1,24 @@
+<snippet>
+  <content><![CDATA[
+int MaxSieve[10000000];
+vector <int> prime;
+
+void sieve(){
+	
+	MaxSieve[0] = MaxSieve[1] = 1;
+
+	for(ll i=2; i<10000000; i++){
+		if(MaxSieve[i]==0){
+			prime.push_back(i);
+			for(ll j=i*i; j<10000000; j+=i){
+				MaxSieve[j] = 1;
+			}
+		}
+	}
+}
+]]></content>
+  <tabTrigger>maxSieve</tabTrigger>
+  <description>sieve of 1e7</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope >source.python</scope > -->
+</snippet>

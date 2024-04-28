@@ -1,0 +1,10 @@
+<snippet>
+  <content><![CDATA[
+int dr[] = {1, 1, 0, -1, -1, -1, 0, 1};
+int dc[] = {0, 1, 1, 1, 0, -1, -1, -1};
+]]></content>
+  <tabTrigger>direction</tabTrigger>
+  <description>8 direction in 2D plane</description>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope >source.c++</scope >
+</snippet>

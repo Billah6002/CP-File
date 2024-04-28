@@ -1,0 +1,17 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+		"LSP",
+		"LSP-clangd",
+	],
+	"installed_packages":
+	[
+		"CMake",
+		"EasyClangComplete",
+		"LSP",
+		"LSP-clangd",
+		"Package Control",
+		"SublimeAStyleFormatter",
+	],
+}

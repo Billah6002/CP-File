@@ -1,0 +1,19 @@
+<snippet>
+	<content><![CDATA[
+int C[1010][1010];
+void nCr(){
+    C[0][0] = 1;
+    for(int i=1; i<1010; i++){
+        for(int j=0; j<=i; j++){
+            if(j==0) C[i][j] = 1;
+            else
+                C[i][j] = (C[i-1][j-1] + C[i-1][j]) % MOD;
+        }
+    }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ncr</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
