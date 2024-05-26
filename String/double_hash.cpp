@@ -4,59 +4,59 @@ using namespace std;
 #define ll long long
 //from youKnowWho
 const int N = 1e6 + 9;
-ll power(ll n, ll k, const int mod) {
-	ll ans = 1 % mod;
+int power(int n, int k, const int mod) {
+	int ans = 1 % mod;
 	n %= mod;
 	if (n < 0) n += mod;
 	while (k) {
-		if (k & 1) ans = ans * n % mod;
-		n = n * n % mod;
+		if (k & 1) ans = 1ll * ans * n % mod;
+		n = 1ll * n * n % mod;
 		k >>= 1;
 	}
 	return ans;
 }
 const int mod1 = 127657753, mod2 = 987654319;
 const int p1 = 137, p2 = 277;
-ll ip1, ip2;
-pair<ll, ll> pw[N], ipw[N];
+int ip1, ip2;
+pair<int, int> pw[N], ipw[N];
 void prec() {
 	pw[0] =  {1, 1};
 	for (int i = 1; i < N; i++) {
-		pw[i].first = pw[i - 1].first * p1 % mod1;
-		pw[i].second = pw[i - 1].second * p2 % mod2;
+		pw[i].first = 1ll * pw[i - 1].first * p1 % mod1;
+		pw[i].second = 1ll * pw[i - 1].second * p2 % mod2;
 	}
 	ip1 = power(p1, mod1 - 2, mod1);
 	ip2 = power(p2, mod2 - 2, mod2);
 	ipw[0] =  {1, 1};
 	for (int i = 1; i < N; i++) {
-		ipw[i].first = ipw[i - 1].first * ip1 % mod1;
-		ipw[i].second = 1LL * ipw[i - 1].second * ip2 % mod2;
+		ipw[i].first = 1ll * ipw[i - 1].first * ip1 % mod1;
+		ipw[i].second = 1ll * ipw[i - 1].second * ip2 % mod2;
 	}
 
 }
 struct Hashing {
 	int n;
 	string s;
-	vector<pair<ll, ll>> hs;
+	vector<pair<int, int>> hs;
 	Hashing(string g) {
 		n = g.size();
 		s = g;
 		hs.push_back({0, 0});
 		for (int i = 0; i < n; i++) {
-			pair<ll, ll> p;
-			p.first = (hs[i].first + pw[i].first * s[i] % mod1) % mod1;
-			p.second = (hs[i].second + pw[i].second * s[i] % mod2) % mod2;
+			pair<int, int> p;
+			p.first = (hs[i].first + 1ll * pw[i].first * s[i] % mod1) % mod1;
+			p.second = (hs[i].second + 1ll * pw[i].second * s[i] % mod2) % mod2;
 			hs.push_back(p);
 		}
 	}
-	pair<ll, ll> get_hash(int l, int r) {
+	pair<int, int> get_hash(int l, int r) {
 		assert(1 <= l && l <= r && r <= n);
-		pair<ll, ll> ans;
-		ans.first = (hs[r].first - hs[l - 1].first + mod1) * ipw[l - 1].first % mod1;
-		ans.second = (hs[r].second - hs[l - 1].second + mod2) * ipw[l - 1].second % mod2;
+		pair<int, int> ans;
+		ans.first = 1ll * (hs[r].first - hs[l - 1].first + mod1) * ipw[l - 1].first % mod1;
+		ans.second = 1ll * (hs[r].second - hs[l - 1].second + mod2) * ipw[l - 1].second % mod2;
 		return ans;
 	}
-	pair<ll, ll> get_hash() {
+	pair<int, int> get_hash() {
 		return get_hash(1, n);
 	}
 };
