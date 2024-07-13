@@ -4,27 +4,33 @@ using namespace std;
 
 
 // dijkstra algorithms
-vector<pair<int, ll>> Adj[1005];
-int dist[1005], n;//n number of nodes
+const int N = 2e5 + 10;
+vector <pair<int, int>> ad[N];
+ll ww[N], n;
+vector<ll> dist(N, 1e18);
 
-void dijkstra(int s){
+void dijkstra(int s) {
+    priority_queue<array<ll, 2>, vector<array<ll, 2>>, greater<> > q;
+    q.push({ww[s], s});
+    dist[s] = ww[s];
 
-    priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>> > pq;
-    pq.push({0, s});
-    bool mark[n+1] = {false};
-    while(!pq.empty()){
-        auto [w, v] = pq.top();
-        pq.pop();
-        mark[v] = true;
-        for(auto [u, wt]:Adj[v]){
-            if(mark[u]) continue;
-            if(w+wt < dist[u]){
-                dist[u] = w+wt;
-                pq.push({w+wt, u});
+    while (!q.empty()) {
+        ll v = q.top()[1];
+        ll d_v = q.top()[0];
+        q.pop();
+        if (d_v != dist[v])
+            continue;
+
+        for (auto edge : ad[v]) {
+            ll to = edge.first;
+            ll len = edge.second;
+
+            if (dist[v] + len + ww[to] < dist[to]) {
+                dist[to] = dist[v] + len + ww[to];
+                q.push({dist[to], to});
             }
         }
     }
-
 }
 
-int main(){}
+int main() {}
