@@ -6,13 +6,13 @@ using namespace std;
 // dijkstra algorithms
 const int N = 2e5 + 10;
 vector <pair<int, int>> ad[N];
-ll ww[N], n;
+ll n;
 vector<ll> dist(N, 1e18);
 
 void dijkstra(int s) {
     priority_queue<array<ll, 2>, vector<array<ll, 2>>, greater<> > q;
-    q.push({ww[s], s});
-    dist[s] = ww[s];
+    q.push({0, s});
+    dist[s] = 0;
 
     while (!q.empty()) {
         ll v = q.top()[1];
@@ -25,8 +25,8 @@ void dijkstra(int s) {
             ll to = edge.first;
             ll len = edge.second;
 
-            if (dist[v] + len + ww[to] < dist[to]) {
-                dist[to] = dist[v] + len + ww[to];
+            if (dist[v] + len < dist[to]) {
+                dist[to] = dist[v] + len;
                 q.push({dist[to], to});
             }
         }
