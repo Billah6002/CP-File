@@ -1,26 +1,19 @@
 <snippet>
 	<content><![CDATA[
-#include <bits/stdc++.h>
-using namespace std;
-#define ll long long
-
-void solve() {
-	$0
+const int mod = 1e9 + 7;
+template <typename T>
+void add(T &a, T b) {
+   a += b;
+   if (a >= mod) a -= mod;
 }
-
-int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-
-	int tt = 1;
-	cin >> tt;$1
-	while (tt--) {
-		solve();
-	}
+template <typename M>
+void sub(M &a, M b) {
+   a -= b;
+   if (a < 0) a += mod;
 }
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-	<tabTrigger>temp</tabTrigger>
+	<tabTrigger>add_sub</tabTrigger>
 	<!-- Optional: Set a scope to limit where the snippet will trigger -->
 	<!-- <scope>source.python</scope> -->
 </snippet>

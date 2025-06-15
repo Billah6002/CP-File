@@ -1,0 +1,30 @@
+<snippet>
+	<content><![CDATA[
+struct DSU {
+  vector<int> par, sz;
+  DSU(int n) {
+    par.resize(n + 1);
+    sz.resize(n + 1);
+    for (int i = 1; i <= n; i++) {
+      par[i] = i;
+      sz[i] = 1;
+    }
+  }
+  int find(int u) {
+    if (par[u] == u) return u;
+    return par[u] = find(par[u]);
+  }
+  void merge(int u, int v) {
+    u = find(u); v = find(v);
+    if (u == v) return;
+    if (sz[u] > sz[v]) swap(u, v);
+    par[u] = v;
+    sz[v] += sz[u];
+  }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>DSU</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
