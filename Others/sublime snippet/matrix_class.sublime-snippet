@@ -1,0 +1,83 @@
+<snippet>
+	<content><![CDATA[
+template<typename T>
+struct matrix {
+   int N, M;
+   vector<T> data;
+   matrix(int _N, int _M, T value = T{}) : N(_N), M(_M), data(N * M, value) {}
+   typename vector<T>::iterator operator[](int i) {
+      return data.begin() + i * M;
+   }
+   typename vector<T>::const_iterator operator[](int i) const {
+      return data.begin() + i * M;
+   }
+
+   friend matrix<T> operator * (const matrix<T>& a, const matrix<T>& b) {
+      assert(a.M == b.N);
+      matrix<T> res(a.N, b.M);
+      for (int i = 0; i < a.N; i++)
+         for (int k = 0; k < a.M; k++)
+            for (int j = 0; j < b.M; j++)
+               res[i][j] += a[i][k] * b[k][j];
+      return res;
+   }
+
+   friend vector<T> operator * (const vector<T>& v, const matrix<T>& m) {
+      assert(sz(v) == m.N);
+      vector<T> res(m.M);
+      for (int i = 0; i < m.N; i++)
+         for (int j = 0; j < m.M; j++)
+            res[j] += v[i] * m[i][j];
+      return res;
+   }
+
+   friend vector<T> operator * (const matrix<T>& m, const vector<T>& v) {
+      assert(m.M == size(v));
+      vector<T> res(m.N);
+      for (int i = 0; i < m.N; i++)
+         for (int j = 0; j < m.M; j++)
+            res[i] += m[i][j] * v[j];
+      return res;
+   }
+
+   matrix pow(int64_t e) const {
+      assert(N == M);
+      if (e == 0) return matrix<T>(N, N, 0, 1);
+      if (e & 1) return *this * pow(e - 1);
+      return (*this * *this).pow(e / 2);
+   }
+
+   friend void row_reduce(matrix<T> &m) {
+      int rank = 0;
+      for (int j = 0; j < m.M && rank < m.N; j++) {
+         for (int i = rank; i < m.N; i++) {
+            if (m[i][j] != 0) {
+               swap_ranges(m[rank], m[rank] + m.M, m[i]);
+               break;
+            }
+         }
+         if (m[rank][j] == 0)
+            continue;
+         T inv = 1 / m[rank][j];
+         for (int k = j; k < m.M; k++)
+            m[rank][k] *= inv;
+
+         for (int i = 0; i < m.N; i++) {
+            if (i != rank) {
+               T c = m[i][j];
+               for (int k = j; k < m.M; k++)
+                  m[i][k] -= c * m[rank][k];
+            }
+         }
+         rank++;
+      }
+      m.N = rank;
+      m.data.resize(m.N * m.M);
+   }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>matrix_class</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

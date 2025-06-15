@@ -1,0 +1,47 @@
+<snippet>
+	<content><![CDATA[
+/** Works for non-coprime moduli.
+Returns {-1,-1} if the solution does not exist or
+input is invalid.
+Otherwise, returns {x,L}, where x is the
+solution unique to mod L
+Here A is the remainder vector M is moduli
+vector
+*/
+ll extended_euclidean(ll a, ll b, ll& x, ll& y) {
+   x = 1, y = 0;
+   ll x1 = 0, y1 = 1, a1 = a, b1 = b;
+   while (b1) {
+      ll q = a1 / b1;
+      tie(x, x1) = make_tuple(x1, x - q * x1);
+      tie(y, y1) = make_tuple(y1, y - q * y1);
+      tie(a1, b1) = make_tuple(b1, a1 - q * b1);
+   }
+   return a1;
+}
+pair<ll, ll> CRT( vector<ll> A, vector<ll> M ) {
+   ll n = A.size();
+   ll a1 = A[0];
+   ll m1 = M[0];
+   for ( ll i = 1; i < n; i++ ) {
+      ll a2 = A[i];
+      ll m2 = M[i];
+      ll g = __gcd(m1, m2);
+      if ( a1 % g != a2 % g ) return {-1, -1};
+      ll p, q;
+      extended_euclidean(m1 / g, m2 / g, p, q);
+      ll mod = m1 / g * m2;
+      ll x = (a1 * (m2 / g) * q + a2 * (m1 / g) * p) % mod;
+      a1 = x;
+      if (a1 < 0) a1 += mod;
+      m1 = mod;
+   }
+   return {a1, m1};
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>CRT</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
