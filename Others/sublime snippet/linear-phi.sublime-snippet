@@ -1,0 +1,33 @@
+<snippet>
+	<content><![CDATA[
+const int N = 1e5 + 10;
+int phi[N], primes[N / 10];
+bool com[N];
+int pcnt = 0;
+
+void totient() {
+  phi[1] = 1;
+  for (int i = 2; i < N; i++) {
+    if (!com[i]) {
+      primes[pcnt++] = i;
+      phi[i] = i - 1;
+    }
+    for (int j = 0; j < pcnt; j++) {
+      int p = primes[j];
+      if (1LL * i * p >= N) break;
+      com[i * p] = true;
+      if (i % p == 0) {
+        phi[i * p] = phi[i] * p;
+        break;
+      } else {
+        phi[i * p] = phi[i] * (p - 1);
+      }
+    }
+  }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>phi</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

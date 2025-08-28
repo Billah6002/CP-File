@@ -1,0 +1,30 @@
+<snippet>
+	<content><![CDATA[
+const int N = 1e6 + 10;
+int mu[N], isPrime[N], primes[N], pcnt;
+
+void mobius() {
+  mu[1] = 1;
+  for (int i = 2; i < N; i++) {
+    if (!isPrime[i]) {
+      primes[pcnt++] = i;
+      mu[i] = -1;
+    }
+    for (int j = 0; j < pcnt && i * primes[j] < N; j++) {
+      int p = primes[j];
+      isPrime[i * p] = 1;
+      if (i % p == 0) {
+        mu[i * p] = 0;
+        break;
+      } else {
+        mu[i * p] = -mu[i];
+      }
+    }
+  }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mobius</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
