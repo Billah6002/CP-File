@@ -1,0 +1,56 @@
+<snippet>
+	<content><![CDATA[
+struct ptree {
+  int n, cur;
+  vector<int> L, R;
+  vector<ll> st;
+
+  int copy(int u) {
+    ++cur; st[cur] = st[u];
+    L[cur] = L[u]; R[cur] = R[u];
+    return cur;
+  }
+  int build(int s, int e, vector<int> &a) {
+    int u = ++cur;
+    if (s == e) { st[u] = a[s]; return u;}
+    int m = (s + e) >> 1;
+    L[u] = build(s, m, a); R[u] = build(m + 1, e, a);
+    st[u] = st[L[u]] + st[R[u]]; return u;
+  }
+  int init(int _, int q) {
+    n = _;
+    int k = 4 + (1 + __lg(q));
+    L.resize(k * q);
+    R.resize(k * q);
+    st.resize(k * q);
+    cur = 0;
+    // return build(0, n - 1, a);
+    return 1;
+  }
+  int add(int i, ll x, int u, int s, int e) {
+    u = copy(u);
+    if (s == e) { st[u] += x; return u; }
+    int &v = L[u], &w = R[u], m = (s + e) >> 1;
+    if (i <= m) v = add(i, x, v, s, m);
+    else w = add(i, x, w, m + 1, e);
+    st[u] = st[v] + st[w]; return u;
+  }
+  int add(int i, ll x, int u) {
+    return add(i, x, u, 0, n - 1);
+  }
+  ll rsum(int l, int r, int u, int s, int e) {
+    if (e < l or r < s) return 0;
+    if (l <= s and e <= r) return st[u];
+    int v = L[u], w = R[u], m = (s + e) >> 1;
+    return rsum(l, r, v, s, m) + rsum(l, r, w, m + 1, e);
+  }
+  ll rsum(int l, int r, int u) {
+    return rsum(l, r, u, 0, n - 1);
+  }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ptree</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
